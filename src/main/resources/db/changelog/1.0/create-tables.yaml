@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1631639404727-1
+      author: S1 (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(15)
+              - column:
+                  name: description
+                  type: VARCHAR(30)
+            tableName: characters
+
+  - changeSet:
+      id: 1631639404727-3
+      author: S1 (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(15)
+              - column:
+                  name: description
+                  type: VARCHAR(30)
+            tableName: comics
+  - changeSet:
+      id: 1631639404727-2
+      author: S1 (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: character_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: comic_id
+                  type: BIGINT
+            tableName: characters_comics
+  - changeSet:
+      id: 1631639404727-7
+      author: S1 (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: comic_id
+            indexName: comic_id
+            tableName: characters_comics
+  - changeSet:
+      id: 1631639404727-9
+      author: S1 (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: comic_id
+            baseTableName: characters_comics
+            constraintName: characters_comics_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: comics
+            validate: true
+  - changeSet:
+      id: 1631639404727-8
+      author: S1 (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: character_id
+            baseTableName: characters_comics
+            constraintName: characters_comics_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: characters
+            validate: true

@@ -1,0 +1,72 @@
+databaseChangeLog:
+- changeSet:
+    id: 1631639404727-4
+    author: S1 (generated)
+    changes:
+      - loadData:
+          columns:
+            - column:
+                header: id
+                name: id
+                type: NUMERIC
+            - column:
+                header: name
+                name: name
+                type: STRING
+            - column:
+                header: description
+                name: description
+                type: STRING
+          commentLineStartsWith: '#'
+          encoding: UTF-8
+          file: data/characters.csv
+          quotchar: '"'
+          separator: ','
+          relativeToChangelogFile: true
+          tableName: characters
+- changeSet:
+    id: 1631639404727-6
+    author: S1 (generated)
+    changes:
+      - loadData:
+          columns:
+            - column:
+                header: id
+                name: id
+                type: NUMERIC
+            - column:
+                header: name
+                name: name
+                type: STRING
+            - column:
+                header: description
+                name: description
+                type: STRING
+          commentLineStartsWith: '#'
+          encoding: UTF-8
+          file: data/comics.csv
+          quotchar: '"'
+          separator: ','
+          relativeToChangelogFile: true
+          tableName: comics
+- changeSet:
+      id: 1631639404727-5
+      author: S1 (generated)
+      changes:
+          - loadData:
+                columns:
+                    - column:
+                          header: character_id
+                          name: character_id
+                          type: NUMERIC
+                    - column:
+                          header: comic_id
+                          name: comic_id
+                          type: NUMERIC
+                commentLineStartsWith: '#'
+                encoding: UTF-8
+                file: data/characters_comics.csv
+                quotchar: '"'
+                separator: ','
+                relativeToChangelogFile: true
+                tableName: characters_comics
