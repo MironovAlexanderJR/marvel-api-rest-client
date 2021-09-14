@@ -19,6 +19,7 @@ import ru.mironov.marvel.entity.repository.ComicsRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +30,11 @@ public class ComicsService {
     private final ComicsRepository comicsRepository;
 
     public Page<ComicsResponseDto> getAllComics(Pageable pageable) {
-        List<Comics> allComicsInOurDB = comicsRepository.findAll();
-        List<ComicsResponseDto> comicsResponseDtoList = new ArrayList<>();
-        for (Comics comics : allComicsInOurDB) {
-            comicsResponseDtoList.add(convertComicsToComicsResponseDto(comics));
-        }
-        return new PageImpl<>(comicsResponseDtoList);
+        Page<Comics> allComicsInOurDB = comicsRepository.findAll(pageable);
+
+        return new PageImpl<>(allComicsInOurDB.stream()
+                .map(this::convertComicsToComicsResponseDto)
+                .collect(Collectors.toList()));
     }
 
     public ComicsResponseDto getComics(Long id) {
@@ -44,7 +44,6 @@ public class ComicsService {
             throw new NoSuchComicsException("There is no comic book with such an ID");
         }
         Comics comics = optional.get();
-
         return convertComicsToComicsResponseDto(comics);
     }
 

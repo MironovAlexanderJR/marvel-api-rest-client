@@ -19,6 +19,7 @@ import ru.mironov.marvel.model.ComicsModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +30,10 @@ public class CharactersService {
 
     public Page<CharacterResponseDto> getAllCharacters(Pageable pageable) {
         Page<Character> allCharacterInOurDB = characterRepository.findAll(pageable);
-        List<CharacterResponseDto> characterResponseDtoList = new ArrayList<>();
-        for (Character characters : allCharacterInOurDB) {
-            characterResponseDtoList.add(convertCharacterToCharacterResponseDto(characters));
-        }
-        return new PageImpl<>(characterResponseDtoList);
+
+        return new PageImpl<>(allCharacterInOurDB.stream()
+                .map(this::convertCharacterToCharacterResponseDto)
+                .collect(Collectors.toList()));
     }
 
     public CharacterResponseDto getCharacter(Long id) {
@@ -43,7 +43,6 @@ public class CharactersService {
             throw new NoSuchComicsException("There is no character with this ID");
         }
         Character character = optional.get();
-
         return convertCharacterToCharacterResponseDto(character);
     }
 
